@@ -323,6 +323,14 @@ syn match doxygenCodeRegionSpecial contained +[\\@]\(endcode\>\)\@=+
 syn region doxygenVerbatimRegion contained matchgroup=doxygenOther start=+\<verbatim\>+ matchgroup=doxygenOther end=+[\\@]\@<=\<endverbatim\>+ contains=doxygenVerbatimRegionSpecial,doxygenContinueComment,doxygenErrorComment
 syn match doxygenVerbatimRegionSpecial contained +[\\@]\(endverbatim\>\)\@=+
 
+" this fixes some issues i was having with running the doxygen syntax on top
+" of solidity syntax
+if !exists('b:current_syntax')
+  let b:current_syntax = "doxygen"
+else
+  let b:current_syntax = b:current_syntax.'+doxygen'
+endif
+
 let b:doxygen_syntax_save=b:current_syntax
 unlet b:current_syntax
 syn include @Dotx syntax/dot.vim
